@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <h2>React Registration Form </h2>
+  {{registrationForm.value | json}}
+
+  <form [formGroup]="registrationForm">
+    <div class="form-group">
+      <label for="">Username</label>
+      <input  [class.is-invalid]="userName.invalid &&
+                  userName.touched"  formControlName="userName" type="text" class="form-control">
+   <!-- <small class="text-danger" [class.d-none]="registrationForm.get('userName').valid ||
+                                  registrationForm.get('userName').untouched" >username is required</small>-->
+
+      <div *ngIf="userName.invalid && registrationForm.get('userName').touched">
+          <small *ngIf="userName.errors?.required"  class="text-danger">username is required</small>
+          <small *ngIf="userName.errors?.minlength"  class="text-danger">username must be 3 chars</small>
+        <small *ngIf="userName.errors?.forbiddenName"  class="text-danger"> {{userName.errors?.forbiddenName.value}} username not allowed</small>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="">Password</label>
+      <input  formControlName="password" type="password" class="form-control">
+
+    </div>
+
+
+    <div class="form-group">
+      <label for="">Confirm password</label>
+      <input [class.is-invalid]="registrationForm.errors?.mismatch"   formControlName="confirmPassword" type="password" class="form-control">
+      <small *ngIf="registrationForm.errors?.mismatch"  class="text-danger"> password do not match</small>
+
+    </div>
+
+    <div formGroupName="address">
+      <div class="form-group">
+        <label>City</label>
+        <input formControlName="city" type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input formControlName="state" type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input formControlName="postalCode" type="text" class="form-control">
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>email</label>
+      <input [class.is-invalid]="email.invalid && email.touched"   formControlName="email" type="text" class="form-control">
+      <small class="text-danger" [class.d-none]="email.valid || email.untouched" >email is required</small>
+    </div>
+
+    <div class="form-check mb-3">
+      <input type="checkbox" class="form-check-input" formControlName="subscribe">
+      <label for="" class="form-check-label">send promo offers</label>
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">Register</button>
+    <button class="btn btn-secondary" (click)="loadApiData()">Load api data</button>
+
+  </form>
+</div>
